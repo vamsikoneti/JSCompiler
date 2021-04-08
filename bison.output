@@ -1,0 +1,1461 @@
+Terminals unused in grammar
+
+    T_FORSYM
+    T_UNKNOWN
+
+
+Grammar
+
+    0 $accept: prog $end
+
+    1 prog: %empty
+    2     | stmt prog
+
+    3 stmt: switch
+    4     | decl T_SEMICOLON
+    5     | init_expr T_SEMICOLON
+    6     | update_expr T_SEMICOLON
+    7     | fn_exp T_SEMICOLON
+    8     | T_BREAK T_SEMICOLON
+
+    9 switch: T_SWITCH T_LPAREN expr T_RPAREN T_LBRACE case_list default_opr case_list T_RBRACE
+
+   10 default_opr: T_DFAULT T_COLON case_body
+
+   11 case_list: %empty
+   12          | one_case case_list
+
+   13 one_case: T_CASE const_value T_COLON case_body
+
+   14 case_body: T_LBRACE prog T_RBRACE
+   15          | prog
+
+   16 const_value: T_INTEGER
+   17            | T_CHAR
+
+   18 init_expr: T_VARSYM update_expr
+
+   19 update_expr: T_IDENT T_ASSIGN expr
+
+   20 decl: T_VARSYM T_IDENT
+
+   21 fn_exp: T_PRINT T_LPAREN args T_RPAREN
+
+   22 args: value
+   23     | %empty
+
+   24 value: T_IDENT
+   25      | literal
+
+   26 literal: T_INTEGER
+   27        | T_BOOL
+   28        | T_DOUBLE
+   29        | T_STRING
+
+   30 expr: t expr_
+
+   31 expr_: T_OR expr
+   32      | %empty
+
+   33 t: f t_
+
+   34 t_: T_AND t
+   35   | %empty
+
+   36 f: g f_
+
+   37 f_: T_BITWISEOR f
+   38   | %empty
+
+   39 g: h g_
+
+   40 g_: T_BITWISEXOR g
+   41   | %empty
+
+   42 h: i h_
+
+   43 h_: T_BITWISEAND h
+   44   | %empty
+
+   45 i: j i_
+
+   46 i_: equality_op i
+   47   | %empty
+
+   48 j: k j_
+
+   49 j_: rel_op j
+   50   | %empty
+
+   51 k: l k_
+
+   52 k_: bitwise_op k
+   53   | %empty
+
+   54 l: m l_
+
+   55 l_: basic_arth_op l
+   56   | %empty
+
+   57 m: n m_
+
+   58 m_: complex_arth_op m
+   59   | %empty
+
+   60 n: value
+   61  | T_LPAREN expr T_RPAREN
+
+   62 complex_arth_op: T_TIMES
+   63                | T_SLASH
+   64                | T_MODULO
+
+   65 basic_arth_op: T_PLUS
+   66              | T_MINUS
+
+   67 bitwise_op: T_LEFTSHIFT
+   68           | T_RIGHTSHIFT
+
+   69 rel_op: T_LSS
+   70       | T_GTR
+   71       | T_LEQ
+   72       | T_GEQ
+
+   73 equality_op: T_EQL
+   74            | T_NEQ
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    T_PLUS (258) 65
+    T_MINUS (259) 66
+    T_TIMES (260) 62
+    T_SLASH (261) 63
+    T_MODULO (262) 64
+    T_LPAREN (263) 9 21 61
+    T_RPAREN (264) 9 21 61
+    T_LBRACE (265) 9 14
+    T_RBRACE (266) 9 14
+    T_SEMICOLON (267) 4 5 6 7 8
+    T_ASSIGN (268) 19
+    T_EQL (269) 73
+    T_NEQ (270) 74
+    T_LSS (271) 69
+    T_GTR (272) 70
+    T_LEQ (273) 71
+    T_GEQ (274) 72
+    T_BITWISEAND (275) 43
+    T_BITWISEOR (276) 37
+    T_BITWISEXOR (277) 40
+    T_AND (278) 34
+    T_OR (279) 31
+    T_LEFTSHIFT (280) 67
+    T_RIGHTSHIFT (281) 68
+    T_VARSYM (282) 18 20
+    T_FORSYM (283)
+    T_PRINT (284) 21
+    T_BOOL <boolean> (285) 27
+    T_IDENT <id> (286) 19 20 24
+    T_STRING <str> (287) 29
+    T_INTEGER <number> (288) 16 26
+    T_DOUBLE <floating> (289) 28
+    T_UNKNOWN (290)
+    T_SWITCH (291) 9
+    T_COLON (292) 10 13
+    T_BREAK (293) 8
+    T_CASE (294) 13
+    T_CHAR <car> (295) 17
+    T_DFAULT (296) 10
+
+
+Nonterminals, with rules where they appear
+
+    $accept (42)
+        on left: 0
+    prog (43)
+        on left: 1 2
+        on right: 0 2 14 15
+    stmt (44)
+        on left: 3 4 5 6 7 8
+        on right: 2
+    switch (45)
+        on left: 9
+        on right: 3
+    default_opr (46)
+        on left: 10
+        on right: 9
+    case_list (47)
+        on left: 11 12
+        on right: 9 12
+    one_case (48)
+        on left: 13
+        on right: 12
+    case_body (49)
+        on left: 14 15
+        on right: 10 13
+    const_value (50)
+        on left: 16 17
+        on right: 13
+    init_expr (51)
+        on left: 18
+        on right: 5
+    update_expr (52)
+        on left: 19
+        on right: 6 18
+    decl (53)
+        on left: 20
+        on right: 4
+    fn_exp (54)
+        on left: 21
+        on right: 7
+    args (55)
+        on left: 22 23
+        on right: 21
+    value (56)
+        on left: 24 25
+        on right: 22 60
+    literal (57)
+        on left: 26 27 28 29
+        on right: 25
+    expr (58)
+        on left: 30
+        on right: 9 19 31 61
+    expr_ (59)
+        on left: 31 32
+        on right: 30
+    t (60)
+        on left: 33
+        on right: 30 34
+    t_ (61)
+        on left: 34 35
+        on right: 33
+    f (62)
+        on left: 36
+        on right: 33 37
+    f_ (63)
+        on left: 37 38
+        on right: 36
+    g (64)
+        on left: 39
+        on right: 36 40
+    g_ (65)
+        on left: 40 41
+        on right: 39
+    h (66)
+        on left: 42
+        on right: 39 43
+    h_ (67)
+        on left: 43 44
+        on right: 42
+    i (68)
+        on left: 45
+        on right: 42 46
+    i_ (69)
+        on left: 46 47
+        on right: 45
+    j (70)
+        on left: 48
+        on right: 45 49
+    j_ (71)
+        on left: 49 50
+        on right: 48
+    k (72)
+        on left: 51
+        on right: 48 52
+    k_ (73)
+        on left: 52 53
+        on right: 51
+    l (74)
+        on left: 54
+        on right: 51 55
+    l_ (75)
+        on left: 55 56
+        on right: 54
+    m (76)
+        on left: 57
+        on right: 54 58
+    m_ (77)
+        on left: 58 59
+        on right: 57
+    n (78)
+        on left: 60 61
+        on right: 57
+    complex_arth_op (79)
+        on left: 62 63 64
+        on right: 58
+    basic_arth_op (80)
+        on left: 65 66
+        on right: 55
+    bitwise_op (81)
+        on left: 67 68
+        on right: 52
+    rel_op (82)
+        on left: 69 70 71 72
+        on right: 49
+    equality_op (83)
+        on left: 73 74
+        on right: 46
+
+
+State 0
+
+    0 $accept: . prog $end
+
+    T_VARSYM  shift, and go to state 1
+    T_PRINT   shift, and go to state 2
+    T_IDENT   shift, and go to state 3
+    T_SWITCH  shift, and go to state 4
+    T_BREAK   shift, and go to state 5
+
+    $default  reduce using rule 1 (prog)
+
+    prog         go to state 6
+    stmt         go to state 7
+    switch       go to state 8
+    init_expr    go to state 9
+    update_expr  go to state 10
+    decl         go to state 11
+    fn_exp       go to state 12
+
+
+State 1
+
+   18 init_expr: T_VARSYM . update_expr
+   20 decl: T_VARSYM . T_IDENT
+
+    T_IDENT  shift, and go to state 13
+
+    update_expr  go to state 14
+
+
+State 2
+
+   21 fn_exp: T_PRINT . T_LPAREN args T_RPAREN
+
+    T_LPAREN  shift, and go to state 15
+
+
+State 3
+
+   19 update_expr: T_IDENT . T_ASSIGN expr
+
+    T_ASSIGN  shift, and go to state 16
+
+
+State 4
+
+    9 switch: T_SWITCH . T_LPAREN expr T_RPAREN T_LBRACE case_list default_opr case_list T_RBRACE
+
+    T_LPAREN  shift, and go to state 17
+
+
+State 5
+
+    8 stmt: T_BREAK . T_SEMICOLON
+
+    T_SEMICOLON  shift, and go to state 18
+
+
+State 6
+
+    0 $accept: prog . $end
+
+    $end  shift, and go to state 19
+
+
+State 7
+
+    2 prog: stmt . prog
+
+    T_VARSYM  shift, and go to state 1
+    T_PRINT   shift, and go to state 2
+    T_IDENT   shift, and go to state 3
+    T_SWITCH  shift, and go to state 4
+    T_BREAK   shift, and go to state 5
+
+    $default  reduce using rule 1 (prog)
+
+    prog         go to state 20
+    stmt         go to state 7
+    switch       go to state 8
+    init_expr    go to state 9
+    update_expr  go to state 10
+    decl         go to state 11
+    fn_exp       go to state 12
+
+
+State 8
+
+    3 stmt: switch .
+
+    $default  reduce using rule 3 (stmt)
+
+
+State 9
+
+    5 stmt: init_expr . T_SEMICOLON
+
+    T_SEMICOLON  shift, and go to state 21
+
+
+State 10
+
+    6 stmt: update_expr . T_SEMICOLON
+
+    T_SEMICOLON  shift, and go to state 22
+
+
+State 11
+
+    4 stmt: decl . T_SEMICOLON
+
+    T_SEMICOLON  shift, and go to state 23
+
+
+State 12
+
+    7 stmt: fn_exp . T_SEMICOLON
+
+    T_SEMICOLON  shift, and go to state 24
+
+
+State 13
+
+   19 update_expr: T_IDENT . T_ASSIGN expr
+   20 decl: T_VARSYM T_IDENT .
+
+    T_ASSIGN  shift, and go to state 16
+
+    $default  reduce using rule 20 (decl)
+
+
+State 14
+
+   18 init_expr: T_VARSYM update_expr .
+
+    $default  reduce using rule 18 (init_expr)
+
+
+State 15
+
+   21 fn_exp: T_PRINT T_LPAREN . args T_RPAREN
+
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    $default  reduce using rule 23 (args)
+
+    args     go to state 30
+    value    go to state 31
+    literal  go to state 32
+
+
+State 16
+
+   19 update_expr: T_IDENT T_ASSIGN . expr
+
+    T_LPAREN   shift, and go to state 33
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    value    go to state 34
+    literal  go to state 32
+    expr     go to state 35
+    t        go to state 36
+    f        go to state 37
+    g        go to state 38
+    h        go to state 39
+    i        go to state 40
+    j        go to state 41
+    k        go to state 42
+    l        go to state 43
+    m        go to state 44
+    n        go to state 45
+
+
+State 17
+
+    9 switch: T_SWITCH T_LPAREN . expr T_RPAREN T_LBRACE case_list default_opr case_list T_RBRACE
+
+    T_LPAREN   shift, and go to state 33
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    value    go to state 34
+    literal  go to state 32
+    expr     go to state 46
+    t        go to state 36
+    f        go to state 37
+    g        go to state 38
+    h        go to state 39
+    i        go to state 40
+    j        go to state 41
+    k        go to state 42
+    l        go to state 43
+    m        go to state 44
+    n        go to state 45
+
+
+State 18
+
+    8 stmt: T_BREAK T_SEMICOLON .
+
+    $default  reduce using rule 8 (stmt)
+
+
+State 19
+
+    0 $accept: prog $end .
+
+    $default  accept
+
+
+State 20
+
+    2 prog: stmt prog .
+
+    $default  reduce using rule 2 (prog)
+
+
+State 21
+
+    5 stmt: init_expr T_SEMICOLON .
+
+    $default  reduce using rule 5 (stmt)
+
+
+State 22
+
+    6 stmt: update_expr T_SEMICOLON .
+
+    $default  reduce using rule 6 (stmt)
+
+
+State 23
+
+    4 stmt: decl T_SEMICOLON .
+
+    $default  reduce using rule 4 (stmt)
+
+
+State 24
+
+    7 stmt: fn_exp T_SEMICOLON .
+
+    $default  reduce using rule 7 (stmt)
+
+
+State 25
+
+   27 literal: T_BOOL .
+
+    $default  reduce using rule 27 (literal)
+
+
+State 26
+
+   24 value: T_IDENT .
+
+    $default  reduce using rule 24 (value)
+
+
+State 27
+
+   29 literal: T_STRING .
+
+    $default  reduce using rule 29 (literal)
+
+
+State 28
+
+   26 literal: T_INTEGER .
+
+    $default  reduce using rule 26 (literal)
+
+
+State 29
+
+   28 literal: T_DOUBLE .
+
+    $default  reduce using rule 28 (literal)
+
+
+State 30
+
+   21 fn_exp: T_PRINT T_LPAREN args . T_RPAREN
+
+    T_RPAREN  shift, and go to state 47
+
+
+State 31
+
+   22 args: value .
+
+    $default  reduce using rule 22 (args)
+
+
+State 32
+
+   25 value: literal .
+
+    $default  reduce using rule 25 (value)
+
+
+State 33
+
+   61 n: T_LPAREN . expr T_RPAREN
+
+    T_LPAREN   shift, and go to state 33
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    value    go to state 34
+    literal  go to state 32
+    expr     go to state 48
+    t        go to state 36
+    f        go to state 37
+    g        go to state 38
+    h        go to state 39
+    i        go to state 40
+    j        go to state 41
+    k        go to state 42
+    l        go to state 43
+    m        go to state 44
+    n        go to state 45
+
+
+State 34
+
+   60 n: value .
+
+    $default  reduce using rule 60 (n)
+
+
+State 35
+
+   19 update_expr: T_IDENT T_ASSIGN expr .
+
+    $default  reduce using rule 19 (update_expr)
+
+
+State 36
+
+   30 expr: t . expr_
+
+    T_OR  shift, and go to state 49
+
+    $default  reduce using rule 32 (expr_)
+
+    expr_  go to state 50
+
+
+State 37
+
+   33 t: f . t_
+
+    T_AND  shift, and go to state 51
+
+    $default  reduce using rule 35 (t_)
+
+    t_  go to state 52
+
+
+State 38
+
+   36 f: g . f_
+
+    T_BITWISEOR  shift, and go to state 53
+
+    $default  reduce using rule 38 (f_)
+
+    f_  go to state 54
+
+
+State 39
+
+   39 g: h . g_
+
+    T_BITWISEXOR  shift, and go to state 55
+
+    $default  reduce using rule 41 (g_)
+
+    g_  go to state 56
+
+
+State 40
+
+   42 h: i . h_
+
+    T_BITWISEAND  shift, and go to state 57
+
+    $default  reduce using rule 44 (h_)
+
+    h_  go to state 58
+
+
+State 41
+
+   45 i: j . i_
+
+    T_EQL  shift, and go to state 59
+    T_NEQ  shift, and go to state 60
+
+    $default  reduce using rule 47 (i_)
+
+    i_           go to state 61
+    equality_op  go to state 62
+
+
+State 42
+
+   48 j: k . j_
+
+    T_LSS  shift, and go to state 63
+    T_GTR  shift, and go to state 64
+    T_LEQ  shift, and go to state 65
+    T_GEQ  shift, and go to state 66
+
+    $default  reduce using rule 50 (j_)
+
+    j_      go to state 67
+    rel_op  go to state 68
+
+
+State 43
+
+   51 k: l . k_
+
+    T_LEFTSHIFT   shift, and go to state 69
+    T_RIGHTSHIFT  shift, and go to state 70
+
+    $default  reduce using rule 53 (k_)
+
+    k_          go to state 71
+    bitwise_op  go to state 72
+
+
+State 44
+
+   54 l: m . l_
+
+    T_PLUS   shift, and go to state 73
+    T_MINUS  shift, and go to state 74
+
+    $default  reduce using rule 56 (l_)
+
+    l_             go to state 75
+    basic_arth_op  go to state 76
+
+
+State 45
+
+   57 m: n . m_
+
+    T_TIMES   shift, and go to state 77
+    T_SLASH   shift, and go to state 78
+    T_MODULO  shift, and go to state 79
+
+    $default  reduce using rule 59 (m_)
+
+    m_               go to state 80
+    complex_arth_op  go to state 81
+
+
+State 46
+
+    9 switch: T_SWITCH T_LPAREN expr . T_RPAREN T_LBRACE case_list default_opr case_list T_RBRACE
+
+    T_RPAREN  shift, and go to state 82
+
+
+State 47
+
+   21 fn_exp: T_PRINT T_LPAREN args T_RPAREN .
+
+    $default  reduce using rule 21 (fn_exp)
+
+
+State 48
+
+   61 n: T_LPAREN expr . T_RPAREN
+
+    T_RPAREN  shift, and go to state 83
+
+
+State 49
+
+   31 expr_: T_OR . expr
+
+    T_LPAREN   shift, and go to state 33
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    value    go to state 34
+    literal  go to state 32
+    expr     go to state 84
+    t        go to state 36
+    f        go to state 37
+    g        go to state 38
+    h        go to state 39
+    i        go to state 40
+    j        go to state 41
+    k        go to state 42
+    l        go to state 43
+    m        go to state 44
+    n        go to state 45
+
+
+State 50
+
+   30 expr: t expr_ .
+
+    $default  reduce using rule 30 (expr)
+
+
+State 51
+
+   34 t_: T_AND . t
+
+    T_LPAREN   shift, and go to state 33
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    value    go to state 34
+    literal  go to state 32
+    t        go to state 85
+    f        go to state 37
+    g        go to state 38
+    h        go to state 39
+    i        go to state 40
+    j        go to state 41
+    k        go to state 42
+    l        go to state 43
+    m        go to state 44
+    n        go to state 45
+
+
+State 52
+
+   33 t: f t_ .
+
+    $default  reduce using rule 33 (t)
+
+
+State 53
+
+   37 f_: T_BITWISEOR . f
+
+    T_LPAREN   shift, and go to state 33
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    value    go to state 34
+    literal  go to state 32
+    f        go to state 86
+    g        go to state 38
+    h        go to state 39
+    i        go to state 40
+    j        go to state 41
+    k        go to state 42
+    l        go to state 43
+    m        go to state 44
+    n        go to state 45
+
+
+State 54
+
+   36 f: g f_ .
+
+    $default  reduce using rule 36 (f)
+
+
+State 55
+
+   40 g_: T_BITWISEXOR . g
+
+    T_LPAREN   shift, and go to state 33
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    value    go to state 34
+    literal  go to state 32
+    g        go to state 87
+    h        go to state 39
+    i        go to state 40
+    j        go to state 41
+    k        go to state 42
+    l        go to state 43
+    m        go to state 44
+    n        go to state 45
+
+
+State 56
+
+   39 g: h g_ .
+
+    $default  reduce using rule 39 (g)
+
+
+State 57
+
+   43 h_: T_BITWISEAND . h
+
+    T_LPAREN   shift, and go to state 33
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    value    go to state 34
+    literal  go to state 32
+    h        go to state 88
+    i        go to state 40
+    j        go to state 41
+    k        go to state 42
+    l        go to state 43
+    m        go to state 44
+    n        go to state 45
+
+
+State 58
+
+   42 h: i h_ .
+
+    $default  reduce using rule 42 (h)
+
+
+State 59
+
+   73 equality_op: T_EQL .
+
+    $default  reduce using rule 73 (equality_op)
+
+
+State 60
+
+   74 equality_op: T_NEQ .
+
+    $default  reduce using rule 74 (equality_op)
+
+
+State 61
+
+   45 i: j i_ .
+
+    $default  reduce using rule 45 (i)
+
+
+State 62
+
+   46 i_: equality_op . i
+
+    T_LPAREN   shift, and go to state 33
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    value    go to state 34
+    literal  go to state 32
+    i        go to state 89
+    j        go to state 41
+    k        go to state 42
+    l        go to state 43
+    m        go to state 44
+    n        go to state 45
+
+
+State 63
+
+   69 rel_op: T_LSS .
+
+    $default  reduce using rule 69 (rel_op)
+
+
+State 64
+
+   70 rel_op: T_GTR .
+
+    $default  reduce using rule 70 (rel_op)
+
+
+State 65
+
+   71 rel_op: T_LEQ .
+
+    $default  reduce using rule 71 (rel_op)
+
+
+State 66
+
+   72 rel_op: T_GEQ .
+
+    $default  reduce using rule 72 (rel_op)
+
+
+State 67
+
+   48 j: k j_ .
+
+    $default  reduce using rule 48 (j)
+
+
+State 68
+
+   49 j_: rel_op . j
+
+    T_LPAREN   shift, and go to state 33
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    value    go to state 34
+    literal  go to state 32
+    j        go to state 90
+    k        go to state 42
+    l        go to state 43
+    m        go to state 44
+    n        go to state 45
+
+
+State 69
+
+   67 bitwise_op: T_LEFTSHIFT .
+
+    $default  reduce using rule 67 (bitwise_op)
+
+
+State 70
+
+   68 bitwise_op: T_RIGHTSHIFT .
+
+    $default  reduce using rule 68 (bitwise_op)
+
+
+State 71
+
+   51 k: l k_ .
+
+    $default  reduce using rule 51 (k)
+
+
+State 72
+
+   52 k_: bitwise_op . k
+
+    T_LPAREN   shift, and go to state 33
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    value    go to state 34
+    literal  go to state 32
+    k        go to state 91
+    l        go to state 43
+    m        go to state 44
+    n        go to state 45
+
+
+State 73
+
+   65 basic_arth_op: T_PLUS .
+
+    $default  reduce using rule 65 (basic_arth_op)
+
+
+State 74
+
+   66 basic_arth_op: T_MINUS .
+
+    $default  reduce using rule 66 (basic_arth_op)
+
+
+State 75
+
+   54 l: m l_ .
+
+    $default  reduce using rule 54 (l)
+
+
+State 76
+
+   55 l_: basic_arth_op . l
+
+    T_LPAREN   shift, and go to state 33
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    value    go to state 34
+    literal  go to state 32
+    l        go to state 92
+    m        go to state 44
+    n        go to state 45
+
+
+State 77
+
+   62 complex_arth_op: T_TIMES .
+
+    $default  reduce using rule 62 (complex_arth_op)
+
+
+State 78
+
+   63 complex_arth_op: T_SLASH .
+
+    $default  reduce using rule 63 (complex_arth_op)
+
+
+State 79
+
+   64 complex_arth_op: T_MODULO .
+
+    $default  reduce using rule 64 (complex_arth_op)
+
+
+State 80
+
+   57 m: n m_ .
+
+    $default  reduce using rule 57 (m)
+
+
+State 81
+
+   58 m_: complex_arth_op . m
+
+    T_LPAREN   shift, and go to state 33
+    T_BOOL     shift, and go to state 25
+    T_IDENT    shift, and go to state 26
+    T_STRING   shift, and go to state 27
+    T_INTEGER  shift, and go to state 28
+    T_DOUBLE   shift, and go to state 29
+
+    value    go to state 34
+    literal  go to state 32
+    m        go to state 93
+    n        go to state 45
+
+
+State 82
+
+    9 switch: T_SWITCH T_LPAREN expr T_RPAREN . T_LBRACE case_list default_opr case_list T_RBRACE
+
+    T_LBRACE  shift, and go to state 94
+
+
+State 83
+
+   61 n: T_LPAREN expr T_RPAREN .
+
+    $default  reduce using rule 61 (n)
+
+
+State 84
+
+   31 expr_: T_OR expr .
+
+    $default  reduce using rule 31 (expr_)
+
+
+State 85
+
+   34 t_: T_AND t .
+
+    $default  reduce using rule 34 (t_)
+
+
+State 86
+
+   37 f_: T_BITWISEOR f .
+
+    $default  reduce using rule 37 (f_)
+
+
+State 87
+
+   40 g_: T_BITWISEXOR g .
+
+    $default  reduce using rule 40 (g_)
+
+
+State 88
+
+   43 h_: T_BITWISEAND h .
+
+    $default  reduce using rule 43 (h_)
+
+
+State 89
+
+   46 i_: equality_op i .
+
+    $default  reduce using rule 46 (i_)
+
+
+State 90
+
+   49 j_: rel_op j .
+
+    $default  reduce using rule 49 (j_)
+
+
+State 91
+
+   52 k_: bitwise_op k .
+
+    $default  reduce using rule 52 (k_)
+
+
+State 92
+
+   55 l_: basic_arth_op l .
+
+    $default  reduce using rule 55 (l_)
+
+
+State 93
+
+   58 m_: complex_arth_op m .
+
+    $default  reduce using rule 58 (m_)
+
+
+State 94
+
+    9 switch: T_SWITCH T_LPAREN expr T_RPAREN T_LBRACE . case_list default_opr case_list T_RBRACE
+
+    T_CASE  shift, and go to state 95
+
+    $default  reduce using rule 11 (case_list)
+
+    case_list  go to state 96
+    one_case   go to state 97
+
+
+State 95
+
+   13 one_case: T_CASE . const_value T_COLON case_body
+
+    T_INTEGER  shift, and go to state 98
+    T_CHAR     shift, and go to state 99
+
+    const_value  go to state 100
+
+
+State 96
+
+    9 switch: T_SWITCH T_LPAREN expr T_RPAREN T_LBRACE case_list . default_opr case_list T_RBRACE
+
+    T_DFAULT  shift, and go to state 101
+
+    default_opr  go to state 102
+
+
+State 97
+
+   12 case_list: one_case . case_list
+
+    T_CASE  shift, and go to state 95
+
+    $default  reduce using rule 11 (case_list)
+
+    case_list  go to state 103
+    one_case   go to state 97
+
+
+State 98
+
+   16 const_value: T_INTEGER .
+
+    $default  reduce using rule 16 (const_value)
+
+
+State 99
+
+   17 const_value: T_CHAR .
+
+    $default  reduce using rule 17 (const_value)
+
+
+State 100
+
+   13 one_case: T_CASE const_value . T_COLON case_body
+
+    T_COLON  shift, and go to state 104
+
+
+State 101
+
+   10 default_opr: T_DFAULT . T_COLON case_body
+
+    T_COLON  shift, and go to state 105
+
+
+State 102
+
+    9 switch: T_SWITCH T_LPAREN expr T_RPAREN T_LBRACE case_list default_opr . case_list T_RBRACE
+
+    T_CASE  shift, and go to state 95
+
+    $default  reduce using rule 11 (case_list)
+
+    case_list  go to state 106
+    one_case   go to state 97
+
+
+State 103
+
+   12 case_list: one_case case_list .
+
+    $default  reduce using rule 12 (case_list)
+
+
+State 104
+
+   13 one_case: T_CASE const_value T_COLON . case_body
+
+    T_LBRACE  shift, and go to state 107
+    T_VARSYM  shift, and go to state 1
+    T_PRINT   shift, and go to state 2
+    T_IDENT   shift, and go to state 3
+    T_SWITCH  shift, and go to state 4
+    T_BREAK   shift, and go to state 5
+
+    $default  reduce using rule 1 (prog)
+
+    prog         go to state 108
+    stmt         go to state 7
+    switch       go to state 8
+    case_body    go to state 109
+    init_expr    go to state 9
+    update_expr  go to state 10
+    decl         go to state 11
+    fn_exp       go to state 12
+
+
+State 105
+
+   10 default_opr: T_DFAULT T_COLON . case_body
+
+    T_LBRACE  shift, and go to state 107
+    T_VARSYM  shift, and go to state 1
+    T_PRINT   shift, and go to state 2
+    T_IDENT   shift, and go to state 3
+    T_SWITCH  shift, and go to state 4
+    T_BREAK   shift, and go to state 5
+
+    $default  reduce using rule 1 (prog)
+
+    prog         go to state 108
+    stmt         go to state 7
+    switch       go to state 8
+    case_body    go to state 110
+    init_expr    go to state 9
+    update_expr  go to state 10
+    decl         go to state 11
+    fn_exp       go to state 12
+
+
+State 106
+
+    9 switch: T_SWITCH T_LPAREN expr T_RPAREN T_LBRACE case_list default_opr case_list . T_RBRACE
+
+    T_RBRACE  shift, and go to state 111
+
+
+State 107
+
+   14 case_body: T_LBRACE . prog T_RBRACE
+
+    T_VARSYM  shift, and go to state 1
+    T_PRINT   shift, and go to state 2
+    T_IDENT   shift, and go to state 3
+    T_SWITCH  shift, and go to state 4
+    T_BREAK   shift, and go to state 5
+
+    $default  reduce using rule 1 (prog)
+
+    prog         go to state 112
+    stmt         go to state 7
+    switch       go to state 8
+    init_expr    go to state 9
+    update_expr  go to state 10
+    decl         go to state 11
+    fn_exp       go to state 12
+
+
+State 108
+
+   15 case_body: prog .
+
+    $default  reduce using rule 15 (case_body)
+
+
+State 109
+
+   13 one_case: T_CASE const_value T_COLON case_body .
+
+    $default  reduce using rule 13 (one_case)
+
+
+State 110
+
+   10 default_opr: T_DFAULT T_COLON case_body .
+
+    $default  reduce using rule 10 (default_opr)
+
+
+State 111
+
+    9 switch: T_SWITCH T_LPAREN expr T_RPAREN T_LBRACE case_list default_opr case_list T_RBRACE .
+
+    $default  reduce using rule 9 (switch)
+
+
+State 112
+
+   14 case_body: T_LBRACE prog . T_RBRACE
+
+    T_RBRACE  shift, and go to state 113
+
+
+State 113
+
+   14 case_body: T_LBRACE prog T_RBRACE .
+
+    $default  reduce using rule 14 (case_body)
